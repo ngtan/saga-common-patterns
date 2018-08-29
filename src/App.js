@@ -33,6 +33,7 @@ class App extends Component {
 
         <p><button onClick={() => this.props.dispatch({ type: 'LOGIN' })}>LOGIN</button></p>
         <p><button onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>LOGOUT</button></p>
+        <p><button onClick={() => this.props.dispatch({ type: 'GET_PRODUCTS_WITH_TIMEOUT' })}>GET PRODUCTS WITH TIMEOUT</button></p>
       </div>
     );
   }

@@ -1,4 +1,5 @@
-import { all, takeLatest, call, put } from 'redux-saga/effects';
+import { all, takeLatest, call, put, race } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
 
 import fixtures from './fixtures';
 
@@ -49,9 +50,23 @@ function* login() {
   }
 }
 
+function* getProductsWithTimeout() {
+  try {
+    const { products } = yield race({
+      products: yield call(fixtures.getProducts),
+      timeout: yield call(delay, 1000),
+    });
+
+    console.log(products);
+  } catch (error) {
+
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeLatest('LOGIN', login),
     takeLatest('LOGIN_SUCCESS', getRelatedResources),
+    takeLatest('GET_PRODUCTS_WITH_TIMEOUT', getProductsWithTimeout),
   ]);
 }
