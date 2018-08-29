@@ -1,0 +1,31 @@
+const followers = [{ id: 1, name: 'follower 1'}, { id: 2, name: 'follower 2'}, { id: 3, name: 'follower 3'}];
+const followings = [{ id: 1, name: 'following 1'}, { id: 2, name: 'following 2'}, { id: 3, name: 'following 3'}];
+const posts = [{ id: 1, name: 'posts 1'}, { id: 2, name: 'posts 2'}, { id: 3, name: 'posts 3'}];
+const user = { name: 'user 1', token: 'encrypt_token' };
+
+export default {
+
+  getFollowers() {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(followers), 5000);
+    });
+  },
+
+  getFollowings() {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(followings), 2000);
+    });
+  },
+
+  getPosts() {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(posts), 4000);
+    });
+  },
+
+  login() {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(user), 3000);
+    });
+  },
+};
