@@ -9,7 +9,7 @@ function* getFollowers() {
     console.log('followers 5s', followers);
     yield put({ type: 'HOME_SUCCESS', payload: { followers } });
   } catch (error) {
-
+    yield put({ type: 'HOME_ERROR', error: error.message });
   }
 }
 
@@ -19,7 +19,7 @@ function* getFollowings() {
     console.log('followings 2s', followings);
     yield put({ type: 'HOME_SUCCESS', payload: { followings } });
   } catch (error) {
-
+    yield put({ type: 'HOME_ERROR', error: error.message });
   }
 }
 
@@ -29,7 +29,7 @@ function* getPosts() {
     console.log('posts 4s', posts);
     yield put({ type: 'HOME_SUCCESS', payload: { posts } });
   } catch (error) {
-
+    yield put({ type: 'HOME_ERROR', error: error.message });
   }
 }
 
@@ -43,10 +43,10 @@ function* getRelatedResources() {
 
 function* login() {
   try {
-    const user = yield call(fixtures.login);
-    console.log('user', user);
+    yield call(fixtures.login);
+    yield put({ type: 'LOGIN_SUCCESS' });
   } catch (error) {
-
+    yield put({ type: 'LOGIN_ERROR', error: error.message });
   }
 }
 
