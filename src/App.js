@@ -23,7 +23,6 @@ function renderErrors(errors) {
 class App extends Component {
   render() {
     const { followers, followings, posts, products, errors } = this.props;
-    console.log('errors', errors);
 
     return (
       <div className="App">

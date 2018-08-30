@@ -1,11 +1,11 @@
 import { all, takeLatest, call, put, race } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 
-import fixtures from './fixtures';
+import apis from './apis';
 
 function* getFollowers() {
   try {
-    const followers = yield call(fixtures.getFollowers);
+    const followers = yield call(apis.getFollowers);
     console.log('followers 5s', followers);
     yield put({ type: 'HOME_SUCCESS', payload: { followers } });
   } catch (error) {
@@ -15,7 +15,7 @@ function* getFollowers() {
 
 function* getFollowings() {
   try {
-    const followings = yield call(fixtures.getFollowings);
+    const followings = yield call(apis.getFollowings);
     console.log('followings 2s', followings);
     yield put({ type: 'HOME_SUCCESS', payload: { followings } });
   } catch (error) {
@@ -25,7 +25,7 @@ function* getFollowings() {
 
 function* getPosts() {
   try {
-    const posts = yield call(fixtures.getPosts);
+    const posts = yield call(apis.getPosts);
     console.log('posts 4s', posts);
     yield put({ type: 'HOME_SUCCESS', payload: { posts } });
   } catch (error) {
@@ -43,7 +43,8 @@ function* getRelatedResources() {
 
 function* login() {
   try {
-    yield call(fixtures.login);
+    yield call(apis.login);
+    console.log('logged in');
     yield put({ type: 'LOGIN_SUCCESS' });
   } catch (error) {
     yield put({ type: 'LOGIN_ERROR', error: error.message });
@@ -53,7 +54,7 @@ function* login() {
 function* getProductsWithTimeout() {
   try {
     const { products } = yield race({
-      products: call(fixtures.getProducts),
+      products: call(apis.getProducts),
       timeout: call(delay, 2500),
     });
 
