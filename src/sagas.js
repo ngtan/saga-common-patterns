@@ -53,13 +53,18 @@ function* login() {
 function* getProductsWithTimeout() {
   try {
     const { products } = yield race({
-      products: yield call(fixtures.getProducts),
-      timeout: yield call(delay, 1000),
+      products: call(fixtures.getProducts),
+      timeout: call(delay, 2500),
     });
 
-    console.log(products);
-  } catch (error) {
+    if (products) {
+      yield put({ type: 'HOME_SUCCESS', payload: { products } });
+    } else {
+      throw new Error('timeout');
+    }
 
+  } catch (error) {
+    yield put({ type: 'HOME_ERROR', error: error.message });
   }
 }
 

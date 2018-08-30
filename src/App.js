@@ -11,10 +11,19 @@ function renderItems(items) {
   return items.map((item) => (<p key={item.id}>{item.name}</p>));
 }
 
+function renderErrors(errors) {
+  if (!errors || !errors.length) {
+    return null;
+  }
+
+  return errors.map((error) => (<p key={error}>{error}</p>));
+}
+
+
 class App extends Component {
   render() {
-    console.log('app', this.props);
-    const { followers, followings, posts } = this.props;
+    const { followers, followings, posts, products, errors } = this.props;
+    console.log('errors', errors);
 
     return (
       <div className="App">
@@ -30,6 +39,11 @@ class App extends Component {
         {renderItems(followings)}
         <h2>Posts</h2>
         {renderItems(posts)}
+        <h2>Products</h2>
+        {renderItems(products)}
+
+        <h2>Errors</h2>
+        {renderErrors(errors)}
 
         <p><button onClick={() => this.props.dispatch({ type: 'LOGIN' })}>LOGIN</button></p>
         <p><button onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>LOGOUT</button></p>
@@ -40,12 +54,14 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  const { followers, followings, posts } = state.home;
+  const { followers, followings, posts, products, errors } = state.home;
 
   return {
     followers,
     followings,
     posts,
+    products,
+    errors,
   };
 }
 
