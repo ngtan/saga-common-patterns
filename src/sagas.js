@@ -3,10 +3,13 @@ import { delay } from 'redux-saga';
 
 import apis from './apis';
 
+// Use case 1: non sequenced and non blocking sagas
+// Use case 2: single responsibility
+//
 function* getFollowers() {
   try {
     const followers = yield call(apis.getFollowers);
-    console.log('followers 5s', followers);
+    console.log('getFollowers 5s', followers);
     yield put({ type: 'HOME_SUCCESS', payload: { followers } });
   } catch (error) {
     yield put({ type: 'HOME_ERROR', error: error.message });
@@ -16,7 +19,7 @@ function* getFollowers() {
 function* getFollowings() {
   try {
     const followings = yield call(apis.getFollowings);
-    console.log('followings 2s', followings);
+    console.log('getFollowings 2s', followings);
     yield put({ type: 'HOME_SUCCESS', payload: { followings } });
   } catch (error) {
     yield put({ type: 'HOME_ERROR', error: error.message });
@@ -26,7 +29,7 @@ function* getFollowings() {
 function* getPosts() {
   try {
     const posts = yield call(apis.getPosts);
-    console.log('posts 4s', posts);
+    console.log('getPosts 4s', posts);
     yield put({ type: 'HOME_SUCCESS', payload: { posts } });
   } catch (error) {
     yield put({ type: 'HOME_ERROR', error: error.message });
