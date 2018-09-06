@@ -22,7 +22,7 @@ function renderErrors(errors) {
 
 class App extends Component {
   render() {
-    const { followers, followings, posts, products, errors } = this.props;
+    const { followers, followings, posts, products, message, errors } = this.props;
 
     return (
       <div className="App">
@@ -47,19 +47,22 @@ class App extends Component {
         <p><button onClick={() => this.props.dispatch({ type: 'LOGIN' })}>LOGIN</button></p>
         <p><button onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>LOGOUT</button></p>
         <p><button onClick={() => this.props.dispatch({ type: 'GET_PRODUCTS_WITH_TIMEOUT' })}>GET PRODUCTS WITH TIMEOUT</button></p>
+        <p><button onClick={() => this.props.dispatch({ type: 'RETRY_REQUEST' })}>RETRY REQUEST - [{message}]</button></p>
+        <p><button onClick={() => this.props.dispatch({ type: 'GET_FEATURES' })}>GET_FEATURES</button></p>
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const { followers, followings, posts, products, errors } = state.home;
+  const { followers, followings, posts, products, message, errors } = state.home;
 
   return {
     followers,
     followings,
     posts,
     products,
+    message,
     errors,
   };
 }

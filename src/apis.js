@@ -35,4 +35,22 @@ export default {
       setTimeout(() => resolve(products), 3000);
     });
   },
+
+  retryRequest() {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(), 1000);
+    });
+  },
+
+  constantlyClicked() {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(), 1000);
+    });
+  },
+
+  getFeatures() {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(), 1000);
+    });
+  },
 };
