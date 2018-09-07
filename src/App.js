@@ -8,7 +8,7 @@ function renderItems(items) {
     return (<p>No data</p>);
   }
 
-  return items.map((item) => (<p key={item.id}>{item.name}</p>));
+  return items.map((item) => (<p key={item.id || item.url}>{item.name}</p>));
 }
 
 function renderErrors(errors) {
@@ -21,8 +21,20 @@ function renderErrors(errors) {
 
 
 class App extends Component {
+  componentDidUpdate() {
+    console.log('componentDidUpdate');
+  }
+
   render() {
-    const { followers, followings, posts, products, message, errors } = this.props;
+    const {
+      planets,
+      followers,
+      followings,
+      posts,
+      products,
+      message,
+      errors,
+    } = this.props;
 
     return (
       <div className="App">
@@ -30,40 +42,74 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
+        <section className="use-case-0">
+          <div className="container">
+            <div className="row">
+              <h2>
+                Use case 0: A button is constantly clicked
+              </h2>
+              <button onClick={() => this.props.dispatch({ type: 'GET_PLANETS' })}>
+                Get Planets
+              </button>
+            </div>
+            <div className="row">
+              <div className="col-md-4">
+                <h3>Planets</h3>
+                {renderItems(planets)}
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="use-case-1">
+          <div className="container">
+            <div className="row">
+              <h2>
+                Use Case 1: run multiple request in parallel
+              </h2>
+              <button onClick={() => this.props.dispatch({ type: 'LOGIN' })}>
+                Login
+              </button>
+            </div>
+            <div className="row">
+              <div className="col-md-4">
+                <h3>Followers</h3>
+                {renderItems(followers)}
+              </div>
+              <div className="col-md-4">
+                <h3>Followings</h3>
+                {renderItems(followings)}
+              </div>
+              <div className="col-md-4">
+                <h3>Posts</h3>
+                {renderItems(posts)}
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="use-case-2">
+        </section>
+        <section className="use-case-3">
+        </section>
 
 
-        <h2>Followers</h2>
-        {renderItems(followers)}
-        <h2>Followings</h2>
-        {renderItems(followings)}
-        <h2>Posts</h2>
-        {renderItems(posts)}
-        <h2>Products</h2>
+
+
+        <h3>Products</h3>
         {renderItems(products)}
 
-        <h2>Errors</h2>
+        <h3>Errors</h3>
         {renderErrors(errors)}
 
-        <p><button onClick={() => this.props.dispatch({ type: 'LOGIN' })}>LOGIN</button></p>
-        <p><button onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>LOGOUT</button></p>
         <p><button onClick={() => this.props.dispatch({ type: 'GET_PRODUCTS_WITH_TIMEOUT' })}>GET PRODUCTS WITH TIMEOUT</button></p>
         <p><button onClick={() => this.props.dispatch({ type: 'RETRY_REQUEST' })}>RETRY REQUEST - [{message}]</button></p>
-        <p><button onClick={() => this.props.dispatch({ type: 'GET_FEATURES' })}>GET_FEATURES</button></p>
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const { followers, followings, posts, products, message, errors } = state.home;
-
   return {
-    followers,
-    followings,
-    posts,
-    products,
-    message,
-    errors,
+    ...state.home
   };
 }
 

@@ -3,16 +3,17 @@ import { delay } from 'redux-saga';
 
 import apis from './apis';
 
-// Use case 0:
-function* getFeatures() {
+// Use case 0: A button is constantly clicked
+function* getPlanets() {
   try {
-    const features = yield call(apis.getFeatures);
-    yield put({ type: 'HOME_SUCCESS', payload: { features } });
+    const response = yield call(apis.getPlanets);
+    const planets = response.data.results;
+    yield put({ type: 'HOME_SUCCESS', payload: { planets } });
+    console.log('apis.getPlanets succeed');
   } catch (error) {
     yield put({ type: 'HOME_ERROR', error: error.message });
   }
 }
-
 
 // Use case 1: run multiple request in parallel
 function* getFollowers() {
@@ -105,6 +106,6 @@ export default function* rootSaga() {
     takeLatest('LOGIN_SUCCESS', getRelatedResources),
     takeLatest('GET_PRODUCTS_WITH_TIMEOUT', getProductsWithTimeout),
     takeLatest('RETRY_REQUEST', retryRequest),
-    takeLatest('GET_FEATURES', getFeatures),
+    takeLatest('GET_PLANETS', getPlanets),
   ]);
 }

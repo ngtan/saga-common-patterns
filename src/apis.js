@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const followers = [{ id: 1, name: 'follower 1'}, { id: 2, name: 'follower 2'}, { id: 3, name: 'follower 3'}];
 const followings = [{ id: 1, name: 'following 1'}, { id: 2, name: 'following 2'}, { id: 3, name: 'following 3'}];
 const posts = [{ id: 1, name: 'post 1'}, { id: 2, name: 'post 2'}, { id: 3, name: 'post 3'}];
@@ -48,9 +50,8 @@ export default {
     });
   },
 
-  getFeatures() {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(), 1000);
-    });
+  getPlanets() {
+    console.log('apis.getPlanets requested');
+    return axios.get('https://swapi.co/api/planets/');
   },
 };
