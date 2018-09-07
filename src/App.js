@@ -32,8 +32,8 @@ class App extends Component {
       followings,
       posts,
       products,
-      message,
       errors,
+      starships,
     } = this.props;
 
     return (
@@ -64,7 +64,7 @@ class App extends Component {
           <div className="container">
             <div className="row">
               <h2>
-                Use Case 1: run multiple request in parallel
+                Use Case 1: Run multiple request in parallel
               </h2>
               <button onClick={() => this.props.dispatch({ type: 'LOGIN' })}>
                 Login
@@ -109,9 +109,23 @@ class App extends Component {
           </div>
         </section>
         <section className="use-case-3">
+          <div className="container">
+            <div className="row">
+              <h2>
+                Use case 3: Retry request
+              </h2>
+              <button onClick={() => this.props.dispatch({ type: 'GET_STARSHIPS' })}>
+                Get Starships
+              </button>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <h3>Starships</h3>
+                {renderItems(starships)}
+              </div>
+            </div>
+          </div>
         </section>
-
-        <p><button onClick={() => this.props.dispatch({ type: 'RETRY_REQUEST' })}>RETRY REQUEST - [{message}]</button></p>
       </div>
     );
   }

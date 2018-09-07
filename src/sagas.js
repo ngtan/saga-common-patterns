@@ -1,4 +1,4 @@
-import { all, takeLatest, call, put, race, cancelled } from 'redux-saga/effects';
+import { all, takeLatest, call, put, race } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 
 import apis from './apis';
@@ -83,21 +83,39 @@ function* getProductsWithTimeout() {
 }
 
 // Use case 3: retry request few times after a certain time
-function* retryRequest() {
-  for (let i = 0; i < 5; i += 1) {
-    try {
-      console.log(i);
-      yield call(apis.retryRequest);
-      yield put({ type: 'HOME_SUCCESS', payload: { message: 'API request succeed' } });
-      yield cancelled();
-    } catch (error) {
-      if (i < 5) {
-        yield call(delay, 2000);
+function* getStarships() {
+  try {
+    const response = yield call(apis.getStarships);
+    const starships = response.data.results;
+    yield put({ type: 'HOME_SUCCESS', payload: { starships } });
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+function* getStarshipsFailed(error) {
+  yield put({ type: 'HOME_ERROR', error: error.message });
+}
+
+function autoRestart(generator, handleErrorGenerator, maxAttempts = 5, duration = 2000) {
+  let attempts = 0;
+  let isSucceeded = false;
+
+  return function* autoRestarting(...args) {
+    while ((attempts++) <= maxAttempts) {
+      try {
+        yield call(generator, ...args);
+        isSucceeded = true;
+        break;
+      } catch (error) {
+        yield call(delay, duration);
       }
     }
-  }
 
-  yield put({ type: 'HOME_ERROR', error: 'API request failed' });
+    if (!isSucceeded) {
+      yield call(handleErrorGenerator, `FAILED after ${attempts} attempts.`);
+    }
+  }
 }
 
 export default function* rootSaga() {
@@ -108,6 +126,7 @@ export default function* rootSaga() {
     takeLatest('LOGIN_SUCCESS', getRelatedResources),
 
     takeLatest('GET_PRODUCTS_WITH_TIMEOUT', getProductsWithTimeout),
-    takeLatest('RETRY_REQUEST', retryRequest),
+
+    takeLatest('GET_STARSHIPS', autoRestart(getStarships, getStarshipsFailed)),
   ]);
 }

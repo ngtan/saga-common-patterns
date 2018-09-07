@@ -54,4 +54,8 @@ export default {
     console.log('apis.getPlanets requested');
     return axios.get('https://swapi.co/api/planets/');
   },
+
+  getStarships() {
+    return axios.get('https://swapi.co/api/starshits/');
+  }
 };
