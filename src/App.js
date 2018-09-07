@@ -87,20 +87,30 @@ class App extends Component {
           </div>
         </section>
         <section className="use-case-2">
+          <div className="container">
+            <div className="row">
+              <h2>
+                Use case 2: Cancel request
+              </h2>
+              <button onClick={() => this.props.dispatch({ type: 'GET_PRODUCTS_WITH_TIMEOUT' })}>
+                GET PRODUCTS WITH TIMEOUT
+              </button>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <h3>Products</h3>
+                {renderItems(products)}
+              </div>
+              <div className="col-md-6">
+                <h3>Errors</h3>
+                {renderErrors(errors)}
+              </div>
+            </div>
+          </div>
         </section>
         <section className="use-case-3">
         </section>
 
-
-
-
-        <h3>Products</h3>
-        {renderItems(products)}
-
-        <h3>Errors</h3>
-        {renderErrors(errors)}
-
-        <p><button onClick={() => this.props.dispatch({ type: 'GET_PRODUCTS_WITH_TIMEOUT' })}>GET PRODUCTS WITH TIMEOUT</button></p>
         <p><button onClick={() => this.props.dispatch({ type: 'RETRY_REQUEST' })}>RETRY REQUEST - [{message}]</button></p>
       </div>
     );

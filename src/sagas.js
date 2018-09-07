@@ -68,7 +68,7 @@ function* getProductsWithTimeout() {
   try {
     const { products } = yield race({
       products: call(apis.getProducts),
-      timeout: call(delay, 2500),
+      timeout: call(delay, 3000),
     });
 
     if (products) {
@@ -102,10 +102,12 @@ function* retryRequest() {
 
 export default function* rootSaga() {
   yield all([
+    takeLatest('GET_PLANETS', getPlanets),
+
     takeLatest('LOGIN', login),
     takeLatest('LOGIN_SUCCESS', getRelatedResources),
+
     takeLatest('GET_PRODUCTS_WITH_TIMEOUT', getProductsWithTimeout),
     takeLatest('RETRY_REQUEST', retryRequest),
-    takeLatest('GET_PLANETS', getPlanets),
   ]);
 }
