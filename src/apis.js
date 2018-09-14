@@ -38,24 +38,12 @@ export default {
     });
   },
 
-  retryRequest() {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(), 1000);
-    });
-  },
-
-  constantlyClicked() {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(), 1000);
-    });
-  },
-
   getPlanets() {
     console.log('apis.getPlanets requested');
     return axios.get('https://swapi.co/api/planets/');
   },
 
   getStarships() {
-    return axios.get('https://swapi.co/api/starshits/');
+    return axios.get('https://swapi.co/api/starships/');
   }
 };

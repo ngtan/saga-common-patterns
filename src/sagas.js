@@ -68,7 +68,7 @@ function* getProductsWithTimeout() {
   try {
     const { products } = yield race({
       products: call(apis.getProducts),
-      timeout: call(delay, 3000),
+      timeout: call(delay, 4000),
     });
 
     if (products) {
